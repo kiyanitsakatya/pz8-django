@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Дашборды{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.5.1/dist/css/tabler.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body>
+<div class="page">
+    <header class="navbar navbar-expand-md navbar-dark d-print-none">
+        <div class="container-xl">
+            <a class="navbar-brand" href="/">Мой сайт</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="{% url 'dashboard_users' %}">Пользователи</a>
+                <a class="nav-link" href="{% url 'dashboard_courses' %}">Курсы</a>
+                <a class="nav-link" href="{% url 'dashboard_activity' %}">Активность</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-wrapper">
+        <div class="container-xl mt-4">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.5.1/dist/js/tabler.min.js"></script>
+</body>
+</html>

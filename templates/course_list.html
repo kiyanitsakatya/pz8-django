@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %} Курсы {% endblock %}
+
+{% block content %}
+
+<div class="page-header d-print-none mb-3">
+    <div class="row align-items-center">
+        <div class="col">
+            <h2 class="page-title">
+                Список курсов
+            </h2>
+        </div>
+
+        {% if is_methodist %}
+        <div class="col-auto">
+            <a class="btn btn-primary"
+               href="/courses/add/">
+                Добавить курс
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="card">
+
+    <div class="card-header">
+        <h3 class="card-title">
+            Курсы
+        </h3>
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-vcenter table-hover card-table">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Факультет</th>
+                    <th>Описание</th>
+
+                    {% if is_methodist %}
+                    <th>Действия</th>
+                    {% endif %}
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for course in courses %}
+
+                <tr>
+
+                    <td>
+                        {{ course.id }}
+                    </td>
+
+                    <td>
+                        <strong>
+                            {{ course.title }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ course.department.name }}
+                    </td>
+
+                    <td>
+                        {{ course.description|default:"Нет описания" }}
+                    </td>
+
+                    {% if is_methodist %}
+
+                    <td>
+
+                        <a class="btn btn-sm btn-warning"
+                           href="/courses/{{ course.id }}/edit/">
+                            Изменить
+                        </a>
+
+                        <a class="btn btn-sm btn-danger"
+                           href="/courses/{{ course.id }}/delete/">
+                            Удалить
+                        </a>
+
+                    </td>
+
+                    {% endif %}
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

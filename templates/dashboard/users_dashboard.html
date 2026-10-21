@@ -1,0 +1,51 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% block title %}Пользователи{% endblock %}
+
+{% block content %}
+<h2 class="page-title mb-3">Дашборд пользователей</h2>
+
+{% include 'dashboard/components/filter_bar.html' %}
+
+#6 KPI-карточек в 2 ряда
+<div class="row row-deck row-cards mb-3">
+    {% include 'dashboard/components/kpi_card.html' with label="Всего" value=total %}
+    {% include 'dashboard/components/kpi_card.html' with label="Активных" value=active %}
+    {% include 'dashboard/components/kpi_card.html' with label="Сотрудников" value=staff %}
+</div>
+<div class="row row-deck row-cards mb-3">
+    {% include 'dashboard/components/kpi_card.html' with label="Суперпользователей" value=superusers %}
+    {% include 'dashboard/components/kpi_card.html' with label="Ни разу не входили" value=never_logged %}
+    {% include 'dashboard/components/kpi_card.html' with label="Новых за 7 дней" value=new_last_week %}
+</div>
+
+# График регистраций
+<div class="row">
+    <div class="col-12">
+        {% include 'dashboard/components/chart_card.html' with title="Регистрации по дням" chart_id="usersLine" chart_labels=chart_labels chart_series=chart_series %}
+    </div>
+</div>
+
+#Таблица последних пользователей
+<div class="card mt-3">
+    <div class="card-header"><h3 class="card-title">Последние 5 зарегистрированных</h3></div>
+    <div class="table-responsive">
+        <table class="table table-vcenter card-table">
+            <thead>
+                <tr><th>Логин</th><th>Email</th><th>Дата регистрации</th><th>Последний вход</th></tr>
+            </thead>
+            <tbody>
+                {% for u in latest_users %}
+                <tr>
+                    <td>{{ u.username }}</td>
+                    <td class="text-secondary">{{ u.email|default:"—" }}</td>
+                    <td>{{ u.date_joined|date:"d.m.Y H:i" }}</td>
+                    <td>{{ u.last_login|date:"d.m.Y H:i"|default:"никогда" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="text-center text-secondary">Нет пользователей</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

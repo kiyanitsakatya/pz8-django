@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Факультеты
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header d-print-none mb-3">
+    <div class="row align-items-center">
+
+        <div class="col">
+            <h2 class="page-title">
+                Факультеты
+            </h2>
+        </div>
+
+        {% if is_methodist %}
+        <div class="col-auto">
+            <a class="btn btn-primary"
+               href="/departments/add/">
+                Добавить факультет
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+<div class="card">
+
+    <div class="card-header">
+        <h3 class="card-title">
+            Список факультетов
+        </h3>
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-vcenter table-hover card-table">
+
+            <thead>
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Название</th>
+
+                    {% if is_methodist %}
+                    <th>Действия</th>
+                    {% endif %}
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for department in departments %}
+
+            <tr>
+
+                <td>
+                    {{ department.id }}
+                </td>
+
+                <td>
+                    <strong>
+                        {{ department.name }}
+                    </strong>
+                </td>
+
+                {% if is_methodist %}
+
+                <td>
+
+                    <a class="btn btn-sm btn-warning"
+                       href="/departments/{{ department.id }}/edit/">
+                        Изменить
+                    </a>
+
+                    <a class="btn btn-sm btn-danger"
+                       href="/departments/{{ department.id }}/delete/">
+                        Удалить
+                    </a>
+
+                </td>
+
+                {% endif %}
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

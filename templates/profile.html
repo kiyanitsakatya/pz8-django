@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Профиль
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header d-print-none mb-3">
+    <div class="row align-items-center">
+        <div class="col">
+            <h2 class="page-title">
+                Профиль пользователя
+            </h2>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cards">
+
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-header">
+                <h3 class="card-title">
+                    Информация о пользователе
+                </h3>
+            </div>
+
+            <div class="card-body">
+
+                <div class="user-info">
+
+                    <p class="mb-3">
+                        <span class="text-secondary">
+                            Имя пользователя:
+                        </span>
+                        <strong>{{ user.username }}</strong>
+                    </p>
+
+                    <p class="mb-4">
+                        <span class="text-secondary">
+                            Статус:
+                        </span>
+
+                        {% if user.is_superuser %}
+
+                            <span class="badge text-bg-danger">
+                                Администратор
+                            </span>
+
+                        {% elif is_methodist %}
+
+                            <span class="badge text-bg-success">
+                                Методист
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge text-bg-primary">
+                                Пользователь
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+                    <a class="btn btn-primary"
+                       href="/courses/">
+                        Посмотреть курсы
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

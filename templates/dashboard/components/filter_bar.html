@@ -1,0 +1,14 @@
+<form method="get" class="card mb-3">
+    <div class="card-body d-flex gap-2 align-items-end flex-wrap">
+        <div>
+            <label class="form-label">С даты</label>
+            <input type="date" name="date_from" value="{{ request.GET.date_from }}" class="form-control">
+        </div>
+        <div>
+            <label class="form-label">По дату</label>
+            <input type="date" name="date_to" value="{{ request.GET.date_to }}" class="form-control">
+        </div>
+        <button class="btn btn-primary">Применить</button>
+        <a href="." class="btn btn-link">Сбросить</a>
+    </div>
+</form>

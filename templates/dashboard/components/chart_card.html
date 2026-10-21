@@ -1,0 +1,38 @@
+<div class="card mb-3">
+    <div class="card-header"><h3 class="card-title">{{ title }}</h3></div>
+    <div class="card-body">
+        <div id="{{ chart_id }}" style="height: 280px;"></div>
+    </div>
+</div>
+
+<script>
+(function () {
+    const type = '{{ chart_type|default:"line" }}';
+    const isPie = (type === 'donut' || type === 'pie');
+
+    const options = {
+        chart: { type: type, height: 280, toolbar: { show: false } },
+        series: {{ chart_series|safe }},
+        colors: ['#206bc4', '#e74c3c', '#2fb344', '#f59f00', '#ae3ec9', '#d6336c'],
+        legend: { position: 'bottom' },
+    };
+
+    if (isPie) {
+        options.labels = {{ chart_labels|safe }};
+        // Распаковываем [{name, data:[...]}] -> [...]
+        if (Array.isArray(options.series) && options.series[0] && options.series[0].data) {
+            options.series = options.series[0].data;
+        }
+        options.dataLabels = { enabled: true };
+    } else {
+        options.xaxis = { categories: {{ chart_labels|safe }} };
+        if (type === 'line') {
+            options.stroke = { curve: 'smooth', width: 2 };
+            options.fill = { type: 'gradient', gradient: { opacityFrom: 0.4, opacityTo: 0.05 } };
+        }
+        options.dataLabels = { enabled: false };
+    }
+
+    new ApexCharts(document.querySelector("#{{ chart_id }}"), options).render();
+})();
+</script>
