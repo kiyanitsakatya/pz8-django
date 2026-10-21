@@ -6,12 +6,11 @@ from pathlib import Path
 # Корневой путь проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- 1. НАСТРОЙКИ БЕЗОПАСНОСТИ И ОКРУЖЕНИЯ ---
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-local-backup-key-12345")
+
 if not SECRET_KEY:
     raise ImproperlyConfigured("Установите переменную окружения DJANGO_SECRET_KEY")
-
-DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
+DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() == "true"
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -77,6 +76,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # --- 4. БАЗА ДАННЫХ (Автопереключение: Postgres в облаке / SQLite локально) ---
+# Настройка базы данных для Render
 DATABASES = {
     'default': dj_database_url.config(
         default="sqlite:///db.sqlite3",
@@ -84,6 +84,8 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
+
+
 
 # --- 5. ВАЛИДАЦИЯ ПАРОЛЕЙ ---
 AUTH_PASSWORD_VALIDATORS = [
